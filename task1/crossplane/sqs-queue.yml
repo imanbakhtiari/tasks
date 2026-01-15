@@ -1,0 +1,14 @@
+apiVersion: sqs.aws.upbound.io/v1beta1
+kind: Queue
+metadata:
+  name: justtrack-dev-devops-consumer-events
+  annotations:
+    crossplane.io/external-name: justtrack-dev-devops-consumer-events
+spec:
+  forProvider:
+    region: eu-central-1
+    name: justtrack-dev-devops-consumer-events
+  providerConfigRef:
+    name: localstack
+
+

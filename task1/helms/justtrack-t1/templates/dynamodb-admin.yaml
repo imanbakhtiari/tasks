@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dynamodb-admin
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.dynamodbAdmin.replicas }}
+  selector:
+    matchLabels:
+      app: dynamodb-admin
+  template:
+    metadata:
+      labels:
+        app: dynamodb-admin
+    spec:
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+      containers:
+        - name: dynamodb-admin
+          image: {{ .Values.dynamodbAdmin.image }}
+          ports:
+            - containerPort: {{ .Values.dynamodbAdmin.containerPort }}
+          env:
+            - name: DYNAMO_ENDPOINT
+              value: {{ .Values.localstackEndpoint | quote }}
+            - name: AWS_REGION
+              value: eu-central-1
+            - name: AWS_ACCESS_KEY_ID
+              value: test
+            - name: AWS_SECRET_ACCESS_KEY
+              value: test
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dynamodb-admin
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: dynamodb-admin
+  ports:
+    - name: http
+      port: {{ .Values.dynamodbAdmin.servicePort }}
+      targetPort: {{ .Values.dynamodbAdmin.containerPort }}
+

@@ -1,0 +1,52 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dynamodb
+  namespace: devopstest
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/whitelist-source-range: "188.92.255.132/32"
+
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - dynamodb.tunoo.de
+    secretName: my-tls-secret
+  rules:
+  - host: dynamodb.tunoo.de
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: dynamodb-admin
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: localstack
+  namespace: devopstest
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/whitelist-source-range: "188.92.255.132/32"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - localstack.tunoo.de
+    secretName: my-tls-secret
+  rules:
+  - host: localstack.tunoo.de
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: localstack
+            port:
+              number: 4566

@@ -1,0 +1,43 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: devopstest-ingress
+  namespace: {{ .Values.namespace }}
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/whitelist-source-range: {{ .Values.ingress.whitelistSourceRange | quote }}
+spec:
+  ingressClassName: {{ .Values.ingress.className }}
+  tls:
+  - hosts:
+    - {{ .Values.ingress.dynamodbAdminHost }}
+    {{- if .Values.ingress.exposeLocalstack }}
+    - {{ .Values.ingress.localstackHost }}
+    {{- end }}
+    secretName: {{ .Values.ingress.tlsSecretName }}
+  rules:
+  - host: {{ .Values.ingress.dynamodbAdminHost }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: dynamodb-admin
+            port:
+              number: {{ .Values.dynamodbAdmin.servicePort }}
+  {{- if .Values.ingress.exposeLocalstack }}
+  - host: {{ .Values.ingress.localstackHost }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: localstack
+            port:
+              number: 4566
+  {{- end }}
+{{- end }}
+

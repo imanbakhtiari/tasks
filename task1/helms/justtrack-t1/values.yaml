@@ -1,0 +1,30 @@
+namespace: devopstest
+
+localstackEndpoint: "http://localstack.devopstest.svc.cluster.local:4566"
+
+nodeSelector:
+  kubernetes.io/hostname: server01
+
+producer:
+  image: ghcr.io/justtrackio/devopstest-producer:latest
+  replicas: 1
+
+consumer:
+  image: ghcr.io/justtrackio/devopstest-consumer:latest
+  replicas: 1
+
+dynamodbAdmin:
+  image: aaronshaf/dynamodb-admin:latest
+  replicas: 1
+  servicePort: 80
+  containerPort: 8001
+
+ingress:
+  enabled: true
+  className: nginx
+  tlsSecretName: my-tls-secret
+  dynamodbAdminHost: dynamodb.tunoo.de
+  localstackHost: localstack.tunoo.de
+  whitelistSourceRange: "188.92.255.132/32"
+  exposeLocalstack: true
+

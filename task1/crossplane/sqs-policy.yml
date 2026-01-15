@@ -1,0 +1,30 @@
+apiVersion: sqs.aws.upbound.io/v1beta1
+kind: QueuePolicy
+metadata:
+  name: justtrack-dev-devops-consumer-events-policy
+spec:
+  forProvider:
+    region: eu-central-1
+    queueUrlRef:
+      name: justtrack-dev-devops-consumer-events
+    policy: |
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Sid": "AllowSNSPublish",
+            "Effect": "Allow",
+            "Principal": { "Service": "sns.amazonaws.com" },
+            "Action": "sqs:SendMessage",
+            "Resource": "arn:aws:sqs:eu-central-1:000000000000:justtrack-dev-devops-consumer-events",
+            "Condition": {
+              "ArnEquals": {
+                "aws:SourceArn": "arn:aws:sns:eu-central-1:000000000000:justtrack-dev-devops-producer-events"
+              }
+            }
+          }
+        ]
+      }
+  providerConfigRef:
+    name: localstack
+

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: producer
+  namespace: devopstest
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: producer }
+  template:
+    metadata:
+      labels: { app: producer }
+    spec:
+      containers:
+        - name: producer
+          image: ghcr.io/justtrackio/devopstest-producer:latest
+          env:
+            - name: CLOUD_AWS_DEFAULTS_ENDPOINT
+              value: http://localstack.devopstest.svc.cluster.local:4566
+            - name: AWS_DEFAULT_REGION
+              value: eu-central-1
+            - name: AWS_ACCESS_KEY_ID
+              value: test
+            - name: AWS_SECRET_ACCESS_KEY
+              value: test
+

@@ -1,0 +1,35 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-aws-s3
+spec:
+  package: xpkg.upbound.io/upbound/provider-aws-s3:v0.40.0
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-aws-sqs
+spec:
+  package: xpkg.upbound.io/upbound/provider-aws-sqs:v0.40.0
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: upbound-provider-family-aws
+spec:
+  package: xpkg.upbound.io/upbound/provider-family-aws:v0.40.0
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-aws-sns
+spec:
+  package: xpkg.upbound.io/upbound/provider-aws-sns:v0.40.0
+
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: upbound-provider-aws-dynamodb
+spec:
+  package: xpkg.upbound.io/upbound/provider-aws-dynamodb:v1.23.1

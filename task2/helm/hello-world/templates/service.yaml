@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-hello-world
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Release.Name }}-hello-world
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ .Release.Name }}-hello-world
+  ports:
+  - name: http
+    port: {{ .Values.service.port }}
+    targetPort: {{ .Values.service.targetPort }}
+    protocol: TCP
+  - name: metrics
+    port: {{ .Values.metrics.port }}
+    targetPort: {{ .Values.metrics.targetPort }}
+    protocol: TCP
+

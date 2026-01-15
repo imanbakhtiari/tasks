@@ -1,0 +1,17 @@
+apiVersion: dynamodb.aws.upbound.io/v1beta1
+kind: Table
+metadata:
+  name: justtrack-dev-devops-consumer-events
+  annotations:
+    crossplane.io/external-name: justtrack-dev-devops-consumer-events
+spec:
+  forProvider:
+    region: eu-central-1
+    billingMode: PAY_PER_REQUEST
+    hashKey: Id
+    attribute:
+      - name: Id
+        type: S
+  providerConfigRef:
+    name: localstack
+

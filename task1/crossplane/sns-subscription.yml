@@ -1,0 +1,14 @@
+apiVersion: sns.aws.upbound.io/v1beta1
+kind: TopicSubscription
+metadata:
+  name: producer-to-consumer
+spec:
+  forProvider:
+    region: eu-central-1
+    protocol: sqs
+    topicArn: arn:aws:sns:eu-central-1:000000000000:justtrack-dev-devops-producer-events
+    endpoint: arn:aws:sqs:eu-central-1:000000000000:justtrack-dev-devops-consumer-events
+
+  providerConfigRef:
+    name: localstack
+

@@ -95,23 +95,3 @@ kubectl exec -n hello-app deploy/hello-world -- curl localhost:8080/health
 kubectl exec -n hello-app deploy/hello-world -- curl localhost:8090/metrics
 ```
 
----
-
-## Improvements (Next Steps)
-
-* Add Ingress for external access
-* Add Prometheus annotations
-* Add CI pipeline for image build & push
-* Add HorizontalPodAutoscaler
-
----
-
-## Result
-
- Application builds correctly
- Container runs in Kubernetes
- Health & metrics probes work
- Deployment works via **raw YAML** and **Helm**
-
-This demonstrates understanding of **Go**, **Docker**, **Kubernetes**, and **Helm** with real-world debugging and fixes.
-

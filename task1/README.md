@@ -171,3 +171,4 @@ All pods must be **Running**:
 * Setup is clean, reproducible, and production‑grade
 
 
+![DynamoDB events table](./dynamodb.png)
